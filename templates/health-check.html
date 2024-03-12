@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>{{ app_data['description'] }}</h1>
+    <h2>Check Your Fishes</h2>
+
+    <form action="/analyze" class="dropzone" id="myDropzone">
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+        </div>
+    </form>
+
+    <button id="analyzeButton" class="btn btn-primary">Analyze</button>
+
+    <p class="lead">Use this document as a way to quickly start any new project.
+        <br> All you get is this text and a mostly barebones HTML document.</p>
+    <div> Now updated to Bootstrap (Version 5.3.0) and jQuery 3.6.3</div>
+
+    <script>
+        // Execute when document is ready
+        $(document).ready(function () {
+            // Disable auto discover for all elements
+            Dropzone.autoDiscover = false;
+
+            // Initialize Dropzone
+            var myDropzone = new Dropzone("#myDropzone", {
+                url: "/upload",
+                autoProcessQueue: false, // Disable auto upload
+                parallelUploads: 10 // Number of files processed simultaneously
+            });
+
+            // Analyze button click event handler
+            $("#analyzeButton").click(function () {
+                myDropzone.processQueue(); // Manually trigger file upload
+            });
+        });
+    </script>
+{% endblock %}
